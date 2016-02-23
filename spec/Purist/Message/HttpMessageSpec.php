@@ -5,6 +5,7 @@ namespace spec\Purist\Message;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Psr\Http\Message\StreamInterface;
+use Purist\Message\HttpHeaders;
 
 class HttpMessageSpec extends ObjectBehavior
 {
@@ -17,7 +18,11 @@ class HttpMessageSpec extends ObjectBehavior
 
     function let(StreamInterface $body)
     {
-        $this->beConstructedWith(self::STANDARD_PROTOCOL_VERSION, $this->headers, $body);
+        $this->beConstructedWith(
+            self::STANDARD_PROTOCOL_VERSION,
+            new HttpHeaders($this->headers),
+            $body
+        );
     }
 
     function it_is_initializable()
@@ -39,7 +44,7 @@ class HttpMessageSpec extends ObjectBehavior
             ->shouldReturn('1.0');
     }
 
-    function it_checks_if_header_exists_case_insensitively()
+    function it_checks_if_header_exists_case_insensitively($headers)
     {
         $this->hasHeader('Content-Type')->shouldReturn(true);
         $this->hasHeader('content-type')->shouldReturn(true);
@@ -69,7 +74,7 @@ class HttpMessageSpec extends ObjectBehavior
         $this->getHeaderLine('Cache-Control')->shouldReturn('');
     }
 
-    function it_gets_a_new_instance_with_changed_headers()
+    function it_gets_a_new_instance_with_replaced_headers()
     {
         $this
             ->withHeader('Cache-Control', 'max-age=3200')
@@ -85,7 +90,7 @@ class HttpMessageSpec extends ObjectBehavior
             ->callOnWrappedObject('getHeaders')
             ->shouldReturn([
                 'Content-Type' => ['text/html'], // text/html changed to array
-                'accept' => ['text/html', 'application/javascript', 'text/css'],
+                'accept' => ['text/css'],
             ]);
 
         $this->shouldThrow('InvalidArgumentException')
