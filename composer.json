@@ -1,5 +1,5 @@
 {
-    "name": "nicholasruunu/oophpfw",
+    "name": "puristphp/purist",
     "description": "Fully immutable, DIC-less, OOP PHP Framework for building web-applications",
     "license": "MIT",
     "authors": [
