@@ -6,7 +6,7 @@ use GuzzleHttp\Psr7\Response;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\RequestInterface;
 use Purist\HttpCall;
 
 class FallbackEndpointSpec extends ObjectBehavior
@@ -27,7 +27,7 @@ class FallbackEndpointSpec extends ObjectBehavior
         $this->match($request)->shouldReturn(true);
     }
 
-    function it_will_return_response_of_http_call($httpCall, RequestInterface $request, ResponseInterface $response)
+    function it_will_return_response_of_http_call($httpCall, RequestInterface $request, RequestInterface $response)
     {
         $httpCall->response($request)->willReturn($response);
         $this->response($request)->shouldReturn($response);
