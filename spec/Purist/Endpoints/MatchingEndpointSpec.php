@@ -5,20 +5,20 @@ namespace spec\Purist\Endpoints;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
-use Purist\Endpoints\Endpoint;
+use Psr\Http\Message\RequestInterface;
+use Purist\Fork\Endpoint;
 
 class MatchingEndpointSpec extends ObjectBehavior
 {
     function let(
         RequestInterface $request,
-        ResponseInterface $response,
+        RequestInterface $response,
         Endpoint $endpoint1,
         Endpoint $endpoint2
     )
     {
-        $endpoint1->response($request)->willReturn($response);
-        $endpoint2->response($request)->willReturn($response);
+        $endpoint1->route($request)->willReturn($response);
+        $endpoint2->route($request)->willReturn($response);
 
         $this->beConstructedWith($endpoint1, $endpoint2);
     }

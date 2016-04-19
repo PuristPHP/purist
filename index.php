@@ -1,44 +1,26 @@
 <?php
-use Purist\Endpoints\FallbackEndpoint;
-use Purist\Endpoints\MatchingEndpoint;
-use Purist\Endpoints\PathEndpoint;
-use Purist\Endpoints\RegexpEndpoint;
 
-class Application
-{
-    private $dbConnection;
-    private $request;
-
-    public function __construct()
-    {
-
-    }
-
-    public function run()
-    {
-        (new HttpClient(
-            new Middlewares(
-                $this->request,
-                new CookieMiddleware,
-                new SessionMiddleware
-            ),
-            new MatchingEndpoint(
-                new RegexpEndpoint('^/hello/(?<name>[^/]+)$', new HelloWorldPage),
-                new PathEndpoint('/hello-another-world', new AnotherHelloWorldPage),
-                new PathEndpoint(
-                    '/users',
-                    new UserEndpoints(
-                        new Users($this->dbConnection)
-                    )
-                ),
-                new FallbackEndpoint(new NotFoundPage)
-            )
-        ))->sendResponse();
-    }
-}
+use Acme\Application;
+use Acme\FileLogger;
+use Purist\Application\EndpointApplication;
+use Purist\Server\PuristServer;
 
 try {
-    (new Application)->run();
+    (new PuristServer(new Application))->serve();
 } catch (Exception $exception) {
-    (new Logger)->log($exception);
+    (new FileLogger('/var/log/application/error.log'))->log($exception);
+
+    // Error page PHP 5.6
+    (new PuristServer(
+        new EndpointApplication(new ErrorPage)
+    ))->serve();
+
+    // Error page PHP 7
+    (new PuristServer(
+        new class implements Application {
+            public function run() {
+                return new ErrorPage;
+            }
+        }
+    ))->serve();
 }

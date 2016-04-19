@@ -5,7 +5,7 @@ namespace spec\Purist\Endpoints;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\UriInterface;
 use Purist\HttpCall;
 
@@ -38,7 +38,7 @@ class PathEndpointSpec extends ObjectBehavior
         $this->match($request)->shouldReturn(false);
     }
 
-    function it_will_return_response_of_http_call($httpCall, RequestInterface $request, ResponseInterface $response)
+    function it_will_return_response_of_http_call($httpCall, RequestInterface $request, RequestInterface $response)
     {
         $httpCall->response($request)->willReturn($response);
         $this->response($request)->shouldReturn($response);
