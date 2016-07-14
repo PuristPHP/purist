@@ -1,25 +1,30 @@
 <?php
+declare(strict_types=1);
 
 namespace Purist\Request;
 
+use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
 
 class Request implements RequestInterface
 {
-    /**
-     * @type string
-     */
-    private $protocolVersion;
+    private $message;
+    private $uri;
+    private $method;
+    private $requestTarget;
 
-    /**
-     * Request constructor.
-     * @param string $protocolVersion
-     */
-    public function __construct($protocolVersion)
-    {
-        $this->protocolVersion = $protocolVersion;
+    public function __construct(
+        MessageInterface $message,
+        UriInterface $uri,
+        string $method = 'GET',
+        string $requestTarget = 'origin-form'
+    ) {
+        $this->message = $message;
+        $this->uri = $uri;
+        $this->method = $method;
+        $this->requestTarget = new RequestTarget($requestTarget, $uri);
     }
 
     /**
@@ -29,9 +34,9 @@ class Request implements RequestInterface
      *
      * @return string HTTP protocol version.
      */
-    public function getProtocolVersion()
+    public function getProtocolVersion(): string
     {
-        return $this->protocolVersion;
+        return $this->message->getProtocolVersion();
     }
 
     /**
@@ -49,7 +54,12 @@ class Request implements RequestInterface
      */
     public function withProtocolVersion($version)
     {
-        return new self($version);
+        return new self(
+            $this->message->withProtocolVersion($version),
+            $this->uri,
+            $this->method,
+            $this->requestTarget->form()
+        );
     }
 
     /**
@@ -79,7 +89,7 @@ class Request implements RequestInterface
      */
     public function getHeaders()
     {
-       return ['Content-type' => ['text-html']];
+       return $this->message->getHeaders();
     }
 
     /**
@@ -92,7 +102,7 @@ class Request implements RequestInterface
      */
     public function hasHeader($name)
     {
-        // TODO: Implement hasHeader() method.
+        return $this->message->hasHeader($name);
     }
 
     /**
@@ -111,7 +121,7 @@ class Request implements RequestInterface
      */
     public function getHeader($name)
     {
-        // TODO: Implement getHeader() method.
+        return $this->message->getHeader($name);
     }
 
     /**
@@ -135,7 +145,7 @@ class Request implements RequestInterface
      */
     public function getHeaderLine($name)
     {
-        // TODO: Implement getHeaderLine() method.
+        return $this->message->getHeaderLine($name);
     }
 
     /**
@@ -155,7 +165,12 @@ class Request implements RequestInterface
      */
     public function withHeader($name, $value)
     {
-        // TODO: Implement withHeader() method.
+        return new self(
+            $this->message->withHeader($name, $value),
+            $this->uri,
+            $this->method,
+            $this->requestTarget->form()
+        );
     }
 
     /**
@@ -176,7 +191,12 @@ class Request implements RequestInterface
      */
     public function withAddedHeader($name, $value)
     {
-        // TODO: Implement withAddedHeader() method.
+        return new self(
+            $this->message->withAddedHeader($name, $value),
+            $this->uri,
+            $this->method,
+            $this->requestTarget->form()
+        );
     }
 
     /**
@@ -193,7 +213,12 @@ class Request implements RequestInterface
      */
     public function withoutHeader($name)
     {
-        // TODO: Implement withoutHeader() method.
+        return new self(
+            $this->message->withoutHeader($name),
+            $this->uri,
+            $this->method,
+            $this->getRequestTarget()
+        );
     }
 
     /**
@@ -203,7 +228,7 @@ class Request implements RequestInterface
      */
     public function getBody()
     {
-        // TODO: Implement getBody() method.
+        return $this->message->getBody();
     }
 
     /**
@@ -221,7 +246,12 @@ class Request implements RequestInterface
      */
     public function withBody(StreamInterface $body)
     {
-        // TODO: Implement withBody() method.
+        return new self(
+            $this->message->withBody($body),
+            $this->uri,
+            $this->method,
+            $this->requestTarget->form()
+        );
     }
 
     /**
@@ -242,7 +272,7 @@ class Request implements RequestInterface
      */
     public function getRequestTarget()
     {
-        // TODO: Implement getRequestTarget() method.
+        return $this->requestTarget->toString();
     }
 
     /**
@@ -264,7 +294,7 @@ class Request implements RequestInterface
      */
     public function withRequestTarget($requestTarget)
     {
-        // TODO: Implement withRequestTarget() method.
+        return new self($this->message, $this->uri, $this->method, $requestTarget);
     }
 
     /**
@@ -274,7 +304,7 @@ class Request implements RequestInterface
      */
     public function getMethod()
     {
-        // TODO: Implement getMethod() method.
+        return $this->method;
     }
 
     /**
@@ -294,7 +324,12 @@ class Request implements RequestInterface
      */
     public function withMethod($method)
     {
-        // TODO: Implement withMethod() method.
+        return new self(
+            $this->message,
+            $this->uri,
+            $method,
+            $this->requestTarget->form()
+        );
     }
 
     /**
@@ -308,7 +343,7 @@ class Request implements RequestInterface
      */
     public function getUri()
     {
-        // TODO: Implement getUri() method.
+        return clone $this->uri;
     }
 
     /**
@@ -343,6 +378,11 @@ class Request implements RequestInterface
      */
     public function withUri(UriInterface $uri, $preserveHost = false)
     {
-        // TODO: Implement withUri() method.
+        return new self(
+            $this->message,
+            $uri,
+            $this->method,
+            $this->requestTarget->form()
+        );
     }
 }
