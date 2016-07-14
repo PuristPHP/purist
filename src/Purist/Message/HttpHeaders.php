@@ -1,14 +1,11 @@
 <?php
 
-namespace Purist\Message;
+declare(strict_types=1);
 
-use InvalidArgumentException;
+namespace Purist\Message;
 
 final class HttpHeaders implements Headers
 {
-    /**
-     * @type array
-     */
     private $headers;
 
     public function __construct(array $headers)
@@ -41,7 +38,7 @@ final class HttpHeaders implements Headers
      *     key MUST be a header name, and each value MUST be an array of strings
      *     for that header.
      */
-    public function toArray()
+    public function toArray(): array
     {
         return array_map(function($item) {
             return (array) $item;
@@ -56,7 +53,7 @@ final class HttpHeaders implements Headers
      *     name using a case-insensitive string comparison. Returns false if
      *     no matching header name is found in the message.
      */
-    public function has($name)
+    public function has($name): bool
     {
         return array_key_exists(
             strtolower($name),
@@ -78,7 +75,7 @@ final class HttpHeaders implements Headers
      *    header. If the header does not appear in the message, this method MUST
      *    return an empty array.
      */
-    public function header($name)
+    public function header($name): array
     {
         if (!$this->has($name)) {
             return [];
@@ -106,7 +103,7 @@ final class HttpHeaders implements Headers
      *    concatenated together using a comma. If the header does not appear in
      *    the message, this method MUST return an empty string.
      */
-    public function headerLine($name)
+    public function headerLine($name): string
     {
         return implode(',', $this->header($name));
     }
@@ -126,16 +123,15 @@ final class HttpHeaders implements Headers
      * @return self
      * @throws \InvalidArgumentException for invalid header names or values.
      */
-    public function replace($name, $value)
+    public function replace($name, $value): Headers
     {
-        $this->guardName($name);
-        $this->guardValue($value);
+        $header = new ValidHeader($name, $value);
 
         return new self(
             array_merge(
-                $this->remove($name)->toArray(),
+                $this->remove($header->name())->toArray(),
                 [
-                    $name => (array) $value
+                    $header->name() => (array) $header->value()
                 ]
             )
         );
@@ -157,26 +153,25 @@ final class HttpHeaders implements Headers
      * @return self
      * @throws \InvalidArgumentException for invalid header names or values.
      */
-    public function add($name, $value)
+    public function add($name, $value): Headers
     {
-        $this->guardName($name);
-        $this->guardValue($value);
+        $header = new ValidHeader($name, $value);
 
-        if (!$this->has($name)) {
-            return $this->replace($name, $value);
+        if (!$this->has($header->name())) {
+            return $this->replace($header->name(), $header->value());
         }
 
         return new self(
             array_merge(
                 $this->headers,
                 array_map(
-                    function ($item) use ($value) {
-                        return array_merge($item, (array) $value);
+                    function ($item) use ($header) {
+                        return array_merge($item, (array) $header->value());
                     },
                     array_filter(
                         $this->headers,
-                        function($key) use ($name) {
-                            return strtolower($key) === strtolower($name);
+                        function($key) use ($header) {
+                            return strtolower($key) === strtolower($header->name());
                         },
                         ARRAY_FILTER_USE_KEY
                     )
@@ -197,7 +192,7 @@ final class HttpHeaders implements Headers
      * @param string $name Case-insensitive header field name to remove.
      * @return self
      */
-    public function remove($name)
+    public function remove($name): Headers
     {
         return new self(
             array_filter(
@@ -208,34 +203,5 @@ final class HttpHeaders implements Headers
                 ARRAY_FILTER_USE_KEY
             )
         );
-    }
-
-    /**
-     * @param string $name
-     * @throws \InvalidArgumentException When header name is invalid
-     */
-    private function guardName($name)
-    {
-        if (!is_string($name) || $name === '') {
-            throw new InvalidArgumentException(
-                'Name needs to be a non-empty string'
-            );
-        }
-    }
-
-    /**
-     * @param string|string[] $value
-     * @throws \InvalidArgumentException When header value is invalid
-     */
-    private function guardValue($value)
-    {
-        if (!is_string($value) && !is_array($value)) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    'Value needs to be a string or array, %s received',
-                    gettype($value)
-                )
-            );
-        }
     }
 }

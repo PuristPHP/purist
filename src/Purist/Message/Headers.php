@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Purist\Message;
 
 interface Headers
@@ -29,7 +31,7 @@ interface Headers
      *     key MUST be a header name, and each value MUST be an array of strings
      *     for that header.
      */
-    public function toArray();
+    public function toArray(): array;
 
     /**
      * Checks if a header exists by the given case-insensitive name.
@@ -39,7 +41,7 @@ interface Headers
      *     name using a case-insensitive string comparison. Returns false if
      *     no matching header name is found in the message.
      */
-    public function has($name);
+    public function has($name): bool;
 
     /**
      * Retrieves a message header value by the given case-insensitive name.
@@ -55,7 +57,7 @@ interface Headers
      *    header. If the header does not appear in the message, this method MUST
      *    return an empty array.
      */
-    public function header($name);
+    public function header($name): array;
 
     /**
      * Retrieves a comma-separated string of the values for a single header.
@@ -76,7 +78,7 @@ interface Headers
      *    concatenated together using a comma. If the header does not appear in
      *    the message, this method MUST return an empty string.
      */
-    public function headerLine($name);
+    public function headerLine($name): string;
 
     /**
      * Return an instance with the provided value replacing the specified header.
@@ -93,7 +95,7 @@ interface Headers
      * @return self
      * @throws \InvalidArgumentException for invalid header names or values.
      */
-    public function replace($name, $value);
+    public function replace($name, $value): Headers;
 
     /**
      * Return an instance with the specified header appended with the given value.
@@ -111,7 +113,7 @@ interface Headers
      * @return self
      * @throws \InvalidArgumentException for invalid header names or values.
      */
-    public function add($name, $value);
+    public function add($name, $value): Headers;
 
     /**
      * Return an instance without the specified header.
@@ -125,5 +127,5 @@ interface Headers
      * @param string $name Case-insensitive header field name to remove.
      * @return self
      */
-    public function remove($name);
+    public function remove($name): Headers;
 }
