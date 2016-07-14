@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Purist\Endpoints;
+namespace spec\Purist\Endpoint;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -18,8 +18,8 @@ class RegexpEndpointSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Purist\Endpoints\RegexpEndpoint');
-        $this->shouldImplement('Purist\Endpoints\Endpoint');
+        $this->shouldHaveType('Purist\Endpoint\RegexpEndpoint');
+        $this->shouldImplement('Purist\Endpoint\Endpoint');
     }
 
     function it_matches_regexp_strings(RequestInterface $request, UriInterface $uri)

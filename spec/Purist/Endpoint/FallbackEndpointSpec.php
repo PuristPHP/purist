@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Purist\Endpoints;
+namespace spec\Purist\Endpoint;
 
 use GuzzleHttp\Psr7\Response;
 use PhpSpec\ObjectBehavior;
@@ -18,8 +18,8 @@ class FallbackEndpointSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Purist\Endpoints\FallbackEndpoint');
-        $this->shouldImplement('Purist\Endpoints\Endpoint');
+        $this->shouldHaveType('Purist\Endpoint\FallbackEndpoint');
+        $this->shouldImplement('Purist\Endpoint\Endpoint');
     }
 
     function it_will_always_match_request(RequestInterface $request)

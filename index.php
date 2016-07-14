@@ -1,8 +1,8 @@
 <?php
-use Purist\Endpoints\FallbackEndpoint;
-use Purist\Endpoints\MatchingEndpoint;
-use Purist\Endpoints\PathEndpoint;
-use Purist\Endpoints\RegexpEndpoint;
+use Purist\Endpoint\FallbackEndpoint;
+use Purist\Endpoint\MatchingEndpoint;
+use Purist\Endpoint\PathEndpoint;
+use Purist\Endpoint\RegexpEndpoint;
 
 class Application
 {

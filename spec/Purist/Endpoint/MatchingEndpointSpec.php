@@ -1,12 +1,11 @@
 <?php
 
-namespace spec\Purist\Endpoints;
+namespace spec\Purist\Endpoint;
 
 use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Purist\Endpoints\Endpoint;
+use Purist\Endpoint\Endpoint;
 
 class MatchingEndpointSpec extends ObjectBehavior
 {
@@ -50,6 +49,6 @@ class MatchingEndpointSpec extends ObjectBehavior
         $endpoint1->match($request)->willReturn(false);
         $endpoint2->match($request)->willReturn(false);
 
-        $this->shouldThrow('Exception')->duringResponse();
+        $this->shouldThrow('Exception')->duringResponse($request);
     }
 }

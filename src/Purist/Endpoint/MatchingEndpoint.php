@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 
-namespace Purist\Endpoints;
+namespace Purist\Endpoint;
 
 use Psr\Http\Message\RequestInterface;
 use Exception;
@@ -10,21 +11,15 @@ final class MatchingEndpoint
 {
     private $endpoints;
 
-    /**
-     * MatchingEndpoint constructor.
-     * @param Endpoint[] ...$endpoints
-     */
     public function __construct(Endpoint ...$endpoints)
     {
         $this->endpoints = $endpoints;
     }
 
     /**
-     * @param RequestInterface $request
-     * @return ResponseInterface
      * @throws Exception
      */
-    public function response(RequestInterface $request)
+    public function response(RequestInterface $request): ResponseInterface
     {
         foreach ($this->endpoints as $endpoint) {
             if ($endpoint->match($request)) {
@@ -35,7 +30,7 @@ final class MatchingEndpoint
         throw new Exception('No matching endpoint could be found.');
     }
 
-    public function match(RequestInterface $request)
+    public function match(RequestInterface $request): bool
     {
         foreach ($this->endpoints as $endpoint) {
             if ($endpoint->match($request)) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Purist\Endpoints;
+namespace spec\Purist\Endpoint;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -18,8 +18,8 @@ class PathEndpointSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType('Purist\Endpoints\PathEndpoint');
-        $this->shouldImplement('Purist\Endpoints\Endpoint');
+        $this->shouldHaveType('Purist\Endpoint\PathEndpoint');
+        $this->shouldImplement('Purist\Endpoint\Endpoint');
     }
 
     function it_matches_a_path_by_string(RequestInterface $request, UriInterface $uri)

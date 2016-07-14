@@ -1,20 +1,24 @@
 <?php
 
-namespace Purist\Endpoints;
+namespace Purist\Endpoint;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Purist\HttpCall;
 
-class FallbackEndpoint implements Endpoint
+final class PathEndpoint implements Endpoint
 {
-    /**
-     * @var HttpCall
-     */
+    private $path;
     private $httpCall;
 
-    public function __construct(HttpCall $httpCall)
+    /**
+     * PathEndpoint constructor.
+     * @param $path
+     * @param HttpCall $httpCall
+     */
+    public function __construct($path, HttpCall $httpCall)
     {
+        $this->path = $path;
         $this->httpCall = $httpCall;
     }
 
@@ -33,6 +37,6 @@ class FallbackEndpoint implements Endpoint
      */
     public function match(RequestInterface $request)
     {
-        return true;
+        return $this->path === $request->getUri()->getPath();
     }
 }

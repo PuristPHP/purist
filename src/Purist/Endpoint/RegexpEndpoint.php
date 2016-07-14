@@ -1,6 +1,6 @@
 <?php
 
-namespace Purist\Endpoints;
+namespace Purist\Endpoint;
 
 use Exception;
 use Psr\Http\Message\RequestInterface;
