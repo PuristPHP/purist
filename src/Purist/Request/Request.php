@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Purist\Request;
@@ -19,7 +20,7 @@ class Request implements RequestInterface
         MessageInterface $message,
         UriInterface $uri,
         string $method = 'GET',
-        string $requestTarget = 'origin-form'
+        string $requestTarget = RequestTarget::ORIGIN_FORM
     ) {
         $this->message = $message;
         $this->uri = $uri;
@@ -294,7 +295,12 @@ class Request implements RequestInterface
      */
     public function withRequestTarget($requestTarget)
     {
-        return new self($this->message, $this->uri, $this->method, $requestTarget);
+        return new self(
+            $this->message,
+            $this->uri,
+            $this->method,
+            $requestTarget
+        );
     }
 
     /**
