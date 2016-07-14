@@ -343,7 +343,7 @@ class Request implements RequestInterface
      */
     public function getUri()
     {
-        return clone $this->uri;
+        return $this->uri;
     }
 
     /**

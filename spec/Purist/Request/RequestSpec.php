@@ -175,7 +175,7 @@ class RequestSpec extends ObjectBehavior
 
     function it_returns_clone_of_uri($uri)
     {
-        $this->getUri()->shouldBeLike($uri);
+        $this->getUri()->shouldReturn($uri);
     }
 
     function it_returns_instance_with_changed_uri(UriInterface $newUri)
@@ -183,6 +183,6 @@ class RequestSpec extends ObjectBehavior
         $this
             ->withUri($newUri)
             ->callOnWrappedObject('getUri')
-            ->shouldbeLike($newUri);
+            ->shouldReturn($newUri);
     }
 }
