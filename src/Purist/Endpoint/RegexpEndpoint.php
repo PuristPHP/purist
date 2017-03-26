@@ -1,36 +1,26 @@
 <?php
 
-namespace Purist\Fork;
+namespace Purist\Endpoint;
 
 use Exception;
 use Psr\Http\Message\RequestInterface;
-use Purist\Endpoint\Endpoint;
-use Purist\Fork\Response\EmptyResponse;
-use Purist\Fork\Response\Optional;
-use Purist\Fork\Response\Response;
+use Psr\Http\Message\ResponseInterface;
+use Purist\Endpoint\Response\EmptyResponse;
+use Purist\Endpoint\Response\Response;
 use Purist\Request\RequestUri;
 
-final class RegexpFork implements Fork
+final class RegexpEndpoint implements Endpoint
 {
     private $regexp;
     private $endpoint;
 
-    /**
-     * RegexpEndpoint constructor.
-     * @param string $regexp
-     * @param Endpoint $endpoint
-     */
-    public function __construct($regexp, Endpoint $endpoint)
+    public function __construct(string $regexp, Endpoint $endpoint)
     {
         $this->regexp = $regexp;
         $this->endpoint = $endpoint;
     }
 
-    /**
-     * @param RequestInterface $request
-     * @return Optional
-     */
-    public function route(RequestInterface $request)
+    public function response(RequestInterface $request): ResponseInterface
     {
         if (!$this->match($request)) {
             return new EmptyResponse();
@@ -42,11 +32,9 @@ final class RegexpFork implements Fork
     }
 
     /**
-     * @param RequestInterface $request
-     * @return bool
      * @throws Exception
      */
-    private function match(RequestInterface $request)
+    private function match(RequestInterface $request): bool
     {
         $matchResult = preg_match($this->regexp, $request->getUri()->getPath());
 

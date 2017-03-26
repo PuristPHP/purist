@@ -1,12 +1,13 @@
 <?php
 
-namespace Purist\Fork;
+namespace Purist\Endpoint;
 
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Purist\Endpoint\Optional;
 use Purist\HttpCall;
 
-class FallbackFork implements Fork
+class FallbackEndpoint implements Endpoint
 {
     /**
      * @var Endpoint
@@ -18,11 +19,7 @@ class FallbackFork implements Fork
         $this->endpoint = $endpoint;
     }
 
-    /**
-     * @param RequestInterface $request
-     * @return Optional
-     */
-    public function route(RequestInterface $request)
+    public function response(RequestInterface $request): ResponseInterface
     {
         return new Response(
             $this->endpoint->response($request)

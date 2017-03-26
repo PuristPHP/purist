@@ -1,6 +1,6 @@
 <?php
 
-namespace Purist\Fork\Response;
+namespace Purist\Endpoint\Response;
 
 use Exception;
 use Psr\Http\Message\RequestInterface;
