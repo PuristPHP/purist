@@ -8,9 +8,7 @@ use Psr\Http\Message\ResponseInterface;
 interface Endpoint
 {
     /**
-     * @param RequestInterface $request
-     * @return ResponseInterface
      * @throws Exception
      */
-    public function response(RequestInterface $request);
+    public function response(RequestInterface $request): ResponseInterface;
 }

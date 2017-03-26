@@ -6,7 +6,7 @@ use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\RequestInterface;
-use Purist\Fork\Endpoint;
+use Purist\Endpoint\Endpoint;
 
 class MatchingEndpointSpec extends ObjectBehavior
 {

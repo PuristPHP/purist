@@ -2,11 +2,12 @@
 
 namespace Acme;
 
-use Purist\Fork\FallbackFork;
-use Purist\Fork\Endpoint;
-use Purist\Fork\MatchingEndpoint;
-use Purist\Fork\PathFork;
-use Purist\Fork\RegexpFork;
+use Purist\Endpoint\MatchingEndpoint;
+use Purist\Endpoint\FallbackEndpoint;
+use Purist\Endpoint\Endpoint;
+use Purist\Endpoint\MatchingEndpoint;
+use Purist\Endpoint\PathEndpoint;
+use Purist\Endpoint\RegexpEndpoint;
 
 class Application
 {
@@ -30,23 +31,23 @@ class Application
                 new CookieMiddleware,
                 new SessionMiddleware
             ),
-            new PathFork('/', new IndexPage),
-            new RegexpFork('^/hello/(?<name>[^/]+)$', new HelloWorldPage),
-            new PathFork(
+            new PathEndpoint('/', new IndexPage),
+            new RegexpEndpoint('^/hello/(?<name>[^/]+)$', new HelloWorldPage),
+            new PathEndpoint(
                 '/hello-another-world',
                 new AnotherHelloWorldPage(
                     new PsrLogger('file/path'),
                     new TwigTemplate('views/hello-world', $this->twigExtensions)
                 )
             ),
-            new PathFork(
+            new PathEndpoint(
                 '/admin',
                 new MatchingEndpoint(
                     new MiddlewaresFork(new AuthenticationMiddleware),
                     new AdminPages($this->dbConnection, $this->twigExtensions)
                 )
             ),
-            new FallbackFork(new NotFoundPage)
+            new FallbackEndpoint(new NotFoundPage)
         );
     }
 }

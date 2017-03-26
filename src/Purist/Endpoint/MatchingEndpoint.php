@@ -8,27 +8,18 @@ use Psr\Http\Message\ResponseInterface;
 
 final class MatchingEndpoint implements Endpoint
 {
-    private $forks;
+    private $endpoints;
 
-    /**
-     * MatchingEndpoint constructor.
-     * @param Fork[] ...$forks
-     */
-    public function __construct(Fork ...$forks)
+    public function __construct(Endpoint ...$endpoints)
     {
-        $this->forks = $forks;
+        $this->endpoints = $endpoints;
     }
 
-    /**
-     * @param RequestInterface $request
-     * @return ResponseInterface
-     * @throws Exception
-     */
-    public function response(RequestInterface $request)
+    public function response(RequestInterface $request): ResponseInterface
     {
-        foreach ($this->forks as $fork) {
-            if ($fork->route($request)->has()) {
-                return $fork->route($request)->get();
+        foreach ($this->endpoints as $endpoint) {
+            if ($endpoint->response($request)->has()) {
+                return $endpoint->response($request)->get();
             }
         }
 
