@@ -4,8 +4,6 @@ namespace Acme;
 
 use Purist\Endpoint\MatchingEndpoint;
 use Purist\Endpoint\FallbackEndpoint;
-use Purist\Endpoint\Endpoint;
-use Purist\Endpoint\MatchingEndpoint;
 use Purist\Endpoint\PathEndpoint;
 use Purist\Endpoint\RegexpEndpoint;
 
@@ -27,10 +25,6 @@ class Application
     public function run()
     {
         return new MatchingEndpoint(
-            new MiddlewaresFork(
-                new CookieMiddleware,
-                new SessionMiddleware
-            ),
             new PathEndpoint('/', new IndexPage),
             new RegexpEndpoint('^/hello/(?<name>[^/]+)$', new HelloWorldPage),
             new PathEndpoint(

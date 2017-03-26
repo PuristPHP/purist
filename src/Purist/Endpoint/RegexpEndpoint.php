@@ -22,13 +22,9 @@ final class RegexpEndpoint implements Endpoint
 
     public function response(RequestInterface $request): ResponseInterface
     {
-        if (!$this->match($request)) {
-            return new EmptyResponse();
-        }
-
-        return new Response(
-            $this->endpoint->response($request)
-        );
+        return $this->match()
+            ? new Response($this->endpoint->response($request))
+            : new EmptyResponse();
     }
 
     /**
