@@ -1,11 +1,12 @@
 <?php
-namespace Purist\Endpoint;
 
-use Exception;
+namespace Purist\Server;
+
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Purist\Exception;
 
-interface Endpoint
+interface Resource
 {
     /**
      * @throws Exception
