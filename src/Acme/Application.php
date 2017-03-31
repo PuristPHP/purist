@@ -2,10 +2,11 @@
 
 namespace Acme;
 
-use Purist\Endpoint\MatchingEndpoint;
-use Purist\Endpoint\FallbackEndpoint;
-use Purist\Endpoint\PathEndpoint;
-use Purist\Endpoint\RegexpEndpoint;
+use Psr\Http\Message\ServerRequestInterface;
+use Purist\Server\Router\EndpointRouter;
+use Purist\Server\Endpoint\FallbackEndpoint;
+use Purist\Server\Endpoint\PathEndpoint;
+use Purist\Server\Endpoint\RegexpEndpoint;
 
 class Application
 {
@@ -22,9 +23,9 @@ class Application
         );
     }
 
-    public function run()
+    public function handle()
     {
-        return new MatchingEndpoint(
+        return new EndpointRouter(
             new PathEndpoint('/', new IndexPage),
             new RegexpEndpoint('^/hello/(?<name>[^/]+)$', new HelloWorldPage),
             new PathEndpoint(
@@ -36,7 +37,7 @@ class Application
             ),
             new PathEndpoint(
                 '/admin',
-                new MatchingEndpoint(
+                new EndpointRouter(
                     new MiddlewaresFork(new AuthenticationMiddleware),
                     new AdminPages($this->dbConnection, $this->twigExtensions)
                 )
