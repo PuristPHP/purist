@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Purist\Server\Endpoint;
 
 use Psr\Http\Message\RequestInterface;
 use Purist\Server\Resource;
 
-class FallbackEndpoint implements Endpoint
+final class FallbackEndpoint implements Endpoint
 {
     private $resource;
 

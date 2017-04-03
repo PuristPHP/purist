@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Purist\Server\Router;
 
 use Psr\Http\Message\RequestInterface;
 use Exception;
 use Purist\Server\Endpoint\Endpoint;
-use Purist\Server\Router\Router;
+use Purist\Server\Resource;
 
 final class EndpointRouter implements Router
 {

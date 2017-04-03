@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Purist;
 
-use Purist\Server\Endpoint\Resource;
+use Purist\Server\Resource;
 use Purist\Server\Router\Router;
 use Purist\Server\Router\ResourceRouter;
 

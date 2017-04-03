@@ -1,5 +1,5 @@
 {
-    "name": "puristphp/purist",
+    "name": "purist/purist",
     "description": "Fully immutable, DIC-less, OOP PHP Framework for building web-applications",
     "license": "MIT",
     "authors": [
@@ -9,11 +9,16 @@
         }
     ],
     "require": {
+        "php": "^7.1",
         "guzzlehttp/psr7": "^1.2",
-        "psr/http-message": "^1.0"
+        "psr/http-message": "^1.0",
+        "purist/http-message": "dev-master"
     },
     "require-dev": {
-        "phpspec/phpspec": "^2.2"
+        "phpspec/phpspec": "^3.0"
+    },
+    "config": {
+        "bin-dir": "bin"
     },
     "autoload": {
         "psr-0": {

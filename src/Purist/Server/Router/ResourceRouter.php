@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Purist\Server\Router;
 
 use Psr\Http\Message\RequestInterface;
 use Purist\Server\Resource;
-use Purist\Server\Router\Router;
 
-class ResourceRouter implements Router
+final class ResourceRouter implements Router
 {
     private $resource;
 
