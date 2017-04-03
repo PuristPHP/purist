@@ -1,12 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Purist\Server\Endpoint;
 
 use Exception;
 use InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
-use Purist\NoResource;
-use Purist\Server\Endpoint\OptionalResponse;
 use Purist\Server\Resource;
 
 final class RegexpEndpoint implements Endpoint
@@ -43,7 +43,7 @@ final class RegexpEndpoint implements Endpoint
     /**
      * @throws Exception
      */
-    public function resource(RequestInterface $request): Resource
+    public function resource(): Resource
     {
         return $this->resource;
     }
