@@ -16,10 +16,10 @@ final class ApplicationServer implements Server
     private $application;
     private $request;
 
-    public function __construct(Application $application, ServerRequestInterface $request = null)
+    public function __construct(Application $application, ServerRequestInterface $request)
     {
         $this->application = $application;
-        $this->request = $request ?? ServerRequest::fromGlobals();
+        $this->request = $request;
     }
 
     /**
@@ -36,13 +36,12 @@ final class ApplicationServer implements Server
              }
          }
 
-
         header(
             sprintf(
                 'HTTP/%s %s %s',
-                    $response->getProtocolVersion(),
-                    $response->getStatusCode(),
-                    $response->getReasonPhrase()
+                $response->getProtocolVersion(),
+                $response->getStatusCode(),
+                $response->getReasonPhrase()
             ),
             true,
             $response->getStatusCode()

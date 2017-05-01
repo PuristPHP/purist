@@ -12,7 +12,7 @@
         "php": "^7.1",
         "guzzlehttp/psr7": "^1.2",
         "psr/http-message": "^1.0",
-        "purist/http-message": "dev-master"
+        "purist/http-message": "dev-release/1.0.0"
     },
     "require-dev": {
         "phpspec/phpspec": "^3.0"
@@ -24,5 +24,7 @@
         "psr-0": {
             "": "src/"
         }
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

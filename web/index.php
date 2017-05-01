@@ -2,31 +2,31 @@
 
 use Acme\AcmeApplication;
 use Acme\FileLogger;
-use GuzzleHttp\Psr7\Stream;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+use Purist\Http\Request\GlobalServerRequest;
+use Purist\Http\Response\Response;
+use Purist\Http\Response\TextResponse;
+use Purist\Http\Stream\LazyReadOnlyTextStream;
 use Purist\Message;
 use Purist\ResourceApplication;
-use Purist\Response\Response;
 use Purist\Server\ApplicationServer;
 use Purist\Server\Resource;
 
 require __DIR__ . '/../vendor/autoload.php';
 
 try {
-    (new ApplicationServer(new AcmeApplication))->serve();
+    $request = GlobalServerRequest::create();
+    (new ApplicationServer(new AcmeApplication, $request))->serve();
 } catch (Exception $exception) {
     (new ApplicationServer(
         new ResourceApplication(
             new class implements Resource {
                 public function response(RequestInterface $request): ResponseInterface {
-                    $stream = new Stream(fopen('php://temp', 'r+'));
-                    $stream->write('test');
-                    $stream->rewind();
-
-                    return new Response(new Message($stream), 404);
+                    return new TextResponse('test', 404);
                 }
             }
-        )
+        ),
+        $request
     ))->serve();
 }
