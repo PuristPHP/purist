@@ -1,0 +1,7 @@
+server:
+    build: .
+    command: php -S 0.0.0.0:8080 -t /code/web
+    volumes:
+        - .:/code
+    ports:
+        - 80:8080
