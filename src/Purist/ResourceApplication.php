@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Purist;
 
+use Purist\Server\Endpoint\Endpoint;
+use Purist\Server\Endpoint\FallbackEndpoint;
 use Purist\Server\Resource;
-use Purist\Server\Router\Router;
-use Purist\Server\Router\ResourceRouter;
 
 final class ResourceApplication implements Application
 {
@@ -17,8 +17,8 @@ final class ResourceApplication implements Application
         $this->resource = $resource;
     }
 
-    public function run(): Router
+    public function run(): Endpoint
     {
-        return new ResourceRouter($this->resource);
+        return new FallbackEndpoint($this->resource);
     }
 }

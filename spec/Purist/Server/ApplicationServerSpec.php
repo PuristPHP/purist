@@ -6,15 +6,19 @@ use GuzzleHttp\Psr7\Stream;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Purist\Http\Message;
+use Purist\Http\Response\Response;
 use Purist\Application;
 use Purist\Exception;
-use Purist\Message;
-use Purist\Response\Response;
+use Purist\Http\Response\TextResponse;
 use Purist\Server\ApplicationServer;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Purist\Server\Endpoint\FallbackEndpoint;
 use Purist\Server\Resource;
+use Purist\Server\ResponseResource;
 use Purist\Server\Router\Router;
+use Purist\Server\Server;
 
 class ApplicationServerSpec extends ObjectBehavior
 {
@@ -26,29 +30,15 @@ class ApplicationServerSpec extends ObjectBehavior
     function it_is_initializable()
     {
         $this->shouldHaveType(ApplicationServer::class);
+        $this->shouldImplement(Server::class);
     }
 
     /**
      * Can not test that headers are being set on CLI
      */
-    function it_sets_headers_and_returns_body(Application $application, ServerRequestInterface $request, Resource $resource, Router $router)
+    function it_sets_headers_and_returns_body(Application $application)
     {
-        $application->run()->willReturn($router);
-        $router->route($request)->willReturn(
-            new class implements Resource {
-                public function response(RequestInterface $request): ResponseInterface {
-                    $body = fopen('php://temp', 'r+');
-                    fwrite($body, 'hello world');
-                    rewind($body);
-
-                    return new Response(
-                        new Message(
-                            new Stream($body)
-                        )
-                    );
-                }
-            }
-        );
+        $application->run()->willReturn(new FallbackEndpoint(new ResponseResource(new TextResponse('hello world'))));
 
         ob_start();
         $this->serve()->shouldOutput('hello world');

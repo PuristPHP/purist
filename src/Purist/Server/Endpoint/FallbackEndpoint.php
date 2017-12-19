@@ -1,10 +1,10 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Purist\Server\Endpoint;
 
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Purist\Server\Resource;
 
 final class FallbackEndpoint implements Endpoint
@@ -16,13 +16,13 @@ final class FallbackEndpoint implements Endpoint
         $this->resource = $resource;
     }
 
-    public function match(RequestInterface $request): bool
+    public function match(ServerRequestInterface $request): bool
     {
         return true;
     }
 
-    public function resource(): Resource
+    public function response(ServerRequestInterface $request): ResponseInterface
     {
-        return $this->resource;
+        return $this->resource->response($request);
     }
 }

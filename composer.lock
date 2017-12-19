@@ -127,18 +127,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PuristPHP/http-message.git",
-                "reference": "5182168508f95295c77d0fc0bd5c8444098949d0"
+                "reference": "2260ad6b52dedca8ad8f788e918d83087cd0a72d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PuristPHP/http-message/zipball/5182168508f95295c77d0fc0bd5c8444098949d0",
-                "reference": "5182168508f95295c77d0fc0bd5c8444098949d0",
+                "url": "https://api.github.com/repos/PuristPHP/http-message/zipball/2260ad6b52dedca8ad8f788e918d83087cd0a72d",
+                "reference": "2260ad6b52dedca8ad8f788e918d83087cd0a72d",
                 "shasum": ""
             },
             "require": {
                 "ext-mbstring": "*",
                 "php": "^7.1",
-                "psr/http-message": "^1.0"
+                "psr/http-message": "^1.0",
+                "ralouphie/getallheaders": "^2.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.3",
@@ -173,7 +174,47 @@
                 "uri",
                 "url"
             ],
-            "time": "2017-05-01 22:45:38"
+            "time": "2017-05-11 23:33:22"
+        },
+        {
+            "name": "ralouphie/getallheaders",
+            "version": "2.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ralouphie/getallheaders.git",
+                "reference": "5601c8a83fbba7ef674a7369456d12f1e0d0eafa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ralouphie/getallheaders/zipball/5601c8a83fbba7ef674a7369456d12f1e0d0eafa",
+                "reference": "5601c8a83fbba7ef674a7369456d12f1e0d0eafa",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~3.7.0",
+                "satooshi/php-coveralls": ">=1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/getallheaders.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ralph Khattar",
+                    "email": "ralph.khattar@gmail.com"
+                }
+            ],
+            "description": "A polyfill for getallheaders.",
+            "time": "2016-02-11T07:05:27+00:00"
         }
     ],
     "packages-dev": [

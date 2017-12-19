@@ -1,19 +1,12 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Purist\Server\Endpoint;
 
-use Exception;
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Purist\Server\Resource;
 
-interface Endpoint
+interface Endpoint extends Resource
 {
-    public function match(RequestInterface $request): bool;
-
-    /**
-     * @throws Exception
-     */
-    public function resource(): Resource;
+    public function match(ServerRequestInterface $request): bool;
 }

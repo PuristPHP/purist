@@ -1,12 +1,11 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Purist\Server\Endpoint;
 
-use Exception;
 use InvalidArgumentException;
-use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 use Purist\Server\Resource;
 
 final class RegexpEndpoint implements Endpoint
@@ -20,10 +19,7 @@ final class RegexpEndpoint implements Endpoint
         $this->resource = $resource;
     }
 
-    /**
-     * @throws Exception
-     */
-    public function match(RequestInterface $request): bool
+    public function match(ServerRequestInterface $request): bool
     {
         $matchResult = @preg_match($this->regexp, $request->getUri()->getPath());
 
@@ -40,11 +36,22 @@ final class RegexpEndpoint implements Endpoint
         return $matchResult === 1;
     }
 
-    /**
-     * @throws Exception
-     */
-    public function resource(): Resource
+    public function response(ServerRequestInterface $request): ResponseInterface
     {
-        return $this->resource;
+        preg_match($this->regexp, $request->getUri()->getPath(), $matches);
+
+        return $this->resource->response(
+            array_reduce(
+                array_keys($matches),
+                function (ServerRequestInterface $request, $key) use ($matches) {
+                    if (filter_var($key, FILTER_VALIDATE_INT) !== false) {
+                        return $request;
+                    }
+
+                    return $request->withAttribute($key, $matches[$key]);
+                },
+                $request
+            )
+        );
     }
 }

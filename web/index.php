@@ -23,7 +23,7 @@ try {
         new ResourceApplication(
             new class implements Resource {
                 public function response(RequestInterface $request): ResponseInterface {
-                    return new TextResponse('test', 404);
+                    return new TextResponse('Something went wrong with the request', 500);
                 }
             }
         ),

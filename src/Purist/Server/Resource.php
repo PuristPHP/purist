@@ -1,17 +1,12 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Purist\Server;
 
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Purist\Exception;
+use Psr\Http\Message\ServerRequestInterface;
 
 interface Resource
 {
-    /**
-     * @throws Exception
-     */
-    public function response(RequestInterface $request): ResponseInterface;
+    public function response(ServerRequestInterface $request): ResponseInterface;
 }

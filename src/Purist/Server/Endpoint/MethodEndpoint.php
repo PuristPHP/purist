@@ -7,20 +7,20 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Purist\Server\Resource;
 
-final class PathEndpoint implements Endpoint
+final class MethodEndpoint implements Endpoint
 {
-    private $path;
+    private $method;
     private $resource;
 
-    public function __construct(string $path, Resource $resource)
+    public function __construct(string $method, Resource $resource)
     {
-        $this->path = $path;
+        $this->method = $method;
         $this->resource = $resource;
     }
 
     public function match(ServerRequestInterface $request): bool
     {
-        return $this->path === $request->getUri()->getPath();
+        return mb_strtoupper($request->getMethod()) === mb_strtoupper($this->method);
     }
 
     public function response(ServerRequestInterface $request): ResponseInterface

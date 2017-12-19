@@ -4,12 +4,8 @@ declare(strict_types=1);
 
 namespace Purist\Server;
 
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Purist\Application;
-use Purist\Request\Request;
-use Purist\Request\ServerRequest;
 
 final class ApplicationServer implements Server
 {
@@ -22,13 +18,9 @@ final class ApplicationServer implements Server
         $this->request = $request;
     }
 
-    /**
-     * @throws Exception
-     */
     public function serve(): void
     {
-        /** @var ResponseInterface $response */
-        $response = $this->application->run()->route($this->request)->response($this->request);
+        $response = $this->application->run()->response($this->request);
 
          foreach ($response->getHeaders() as $name => $values) {
              foreach ($values as $value) {
