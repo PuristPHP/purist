@@ -9,7 +9,7 @@ use Purist\Http\Response\TextResponse;
 use Purist\Message;
 use Purist\Server\Resource;
 
-class HelloNamePage implements Resource
+class xHelloNamePage implements Resource
 {
     public function response(ServerRequestInterface $request): ResponseInterface
     {

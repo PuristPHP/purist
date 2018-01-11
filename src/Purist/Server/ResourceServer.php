@@ -5,22 +5,19 @@ declare(strict_types=1);
 namespace Purist\Server;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Purist\Application;
 
-final class ApplicationServer implements Server
+class ResourceServer implements Server
 {
-    private $application;
-    private $request;
+    private $resource;
 
-    public function __construct(Application $application, ServerRequestInterface $request)
+    public function __construct(Resource $resource)
     {
-        $this->application = $application;
-        $this->request = $request;
+        $this->resource = $resource;
     }
 
-    public function serve(): void
+    final public function serve(ServerRequestInterface $request): void
     {
-        $response = $this->application->run()->response($this->request);
+        $response = $this->resource->response($request);
 
          foreach ($response->getHeaders() as $name => $values) {
              foreach ($values as $value) {

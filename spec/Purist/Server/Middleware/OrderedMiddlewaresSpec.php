@@ -12,6 +12,4 @@ class OrderedMiddlewaresSpec extends ObjectBehavior
     {
         $this->shouldHaveType(OrderedMiddlewares::class);
     }
-
-    function
 }
