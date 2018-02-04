@@ -5,18 +5,19 @@ namespace Purist\Server\Middleware;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Purist\Server\Resource;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-final class MiddlewaresResource implements Resource
+final class MiddlewaresResource implements RequestHandlerInterface
 {
     private $middlewares;
 
-    public function __construct(Middleware ...$middlewares)
+    public function __construct(MiddlewareInterface ...$middlewares)
     {
         $this->middlewares = $middlewares;
     }
 
-    public function response(ServerRequestInterface $request): ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return (new OrderedMiddlewares(...$this->middlewares))->handle($request);
     }

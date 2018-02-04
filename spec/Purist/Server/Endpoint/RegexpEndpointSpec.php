@@ -8,13 +8,13 @@ use Prophecy\Argument;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Purist\Server\Endpoint\Endpoint;
 use Purist\Server\Endpoint\RegexpEndpoint;
-use Purist\Server\Resource;
 
 class RegexpEndpointSpec extends ObjectBehavior
 {
-    function let(Resource $resource)
+    function let(RequestHandlerInterface $resource)
     {
         $this->beConstructedWith('#^/hello-world$#', $resource);
     }
@@ -36,8 +36,8 @@ class RegexpEndpointSpec extends ObjectBehavior
     {
         $uri->getPath()->willReturn('/hello-world');
         $request->getUri()->willReturn($uri);
-        $resource->response($request)->willReturn($response);
-        $this->response($request)->shouldReturn($response);
+        $resource->handle($request)->willReturn($response);
+        $this->handle($request)->shouldReturn($response);
     }
 
     function it_will_throw_exception_on_faulty_regexp(ServerRequestInterface $request, UriInterface $uri, $resource)

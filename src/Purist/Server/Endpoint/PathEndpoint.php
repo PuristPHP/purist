@@ -5,14 +5,14 @@ namespace Purist\Server\Endpoint;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Purist\Server\Resource;
+use Psr\Http\Server\RequestHandlerInterface;
 
 final class PathEndpoint implements Endpoint
 {
     private $path;
     private $resource;
 
-    public function __construct(string $path, Resource $resource)
+    public function __construct(string $path, RequestHandlerInterface $resource)
     {
         $this->path = $path;
         $this->resource = $resource;
@@ -23,8 +23,8 @@ final class PathEndpoint implements Endpoint
         return $this->path === $request->getUri()->getPath();
     }
 
-    public function response(ServerRequestInterface $request): ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        return $this->resource->response($request);
+        return $this->resource->handle($request);
     }
 }

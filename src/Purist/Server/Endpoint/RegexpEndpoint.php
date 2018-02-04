@@ -6,14 +6,14 @@ namespace Purist\Server\Endpoint;
 use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Purist\Server\Resource;
+use Psr\Http\Server\RequestHandlerInterface;
 
 final class RegexpEndpoint implements Endpoint
 {
     private $regexp;
     private $resource;
 
-    public function __construct(string $regexp, Resource $resource)
+    public function __construct(string $regexp, RequestHandlerInterface $resource)
     {
         $this->regexp = $regexp;
         $this->resource = $resource;
@@ -36,11 +36,11 @@ final class RegexpEndpoint implements Endpoint
         return $matchResult === 1;
     }
 
-    public function response(ServerRequestInterface $request): ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         preg_match($this->regexp, $request->getUri()->getPath(), $matches);
 
-        return $this->resource->response(
+        return $this->resource->handle(
             array_reduce(
                 array_keys($matches),
                 function (ServerRequestInterface $request, $key) use ($matches) {

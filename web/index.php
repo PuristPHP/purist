@@ -2,11 +2,11 @@
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Purist\Http\Request\GlobalServerRequest;
 use Purist\Http\Response\TextResponse;
 use Purist\Server\MiddlewareServer;
 use Purist\Server\ResourceServer;
-use Purist\Server\Resource;
 use Purist\Server\Endpoint\EndpointFork;
 use Purist\Server\Endpoint\MethodEndpoint;
 use Purist\Server\Endpoint\RegexpEndpoint;
@@ -43,8 +43,8 @@ try {
     $server->serve($request = GlobalServerRequest::create());
 } catch (Exception $exception) {
     (new ResourceServer(
-        new class implements Resource {
-            public function response(ServerRequestInterface $request): ResponseInterface {
+        new class implements RequestHandlerInterface {
+            public function handle(ServerRequestInterface $request): ResponseInterface {
                 return new TextResponse('Something went wrong with the request', 500);
             }
         }

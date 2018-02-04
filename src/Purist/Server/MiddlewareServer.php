@@ -2,12 +2,12 @@
 
 namespace Purist\Server;
 
-use Purist\Server\Middleware\Middleware;
+use Psr\Http\Server\MiddlewareInterface;
 use Purist\Server\Middleware\MiddlewaresResource;
 
 final class MiddlewareServer extends ResourceServer
 {
-    public function __construct(Middleware ...$middlewares)
+    public function __construct(MiddlewareInterface ...$middlewares)
     {
         parent::__construct(
             new MiddlewaresResource(

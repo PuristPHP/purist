@@ -5,13 +5,12 @@ namespace Purist\Server\Endpoint;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Purist\Server\Resource;
 
 final class FallbackEndpoint implements Endpoint
 {
     private $resource;
 
-    public function __construct(Resource $resource)
+    public function __construct(ServerRequestInterface $resource)
     {
         $this->resource = $resource;
     }
@@ -21,8 +20,8 @@ final class FallbackEndpoint implements Endpoint
         return true;
     }
 
-    public function response(ServerRequestInterface $request): ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        return $this->resource->response($request);
+        return $this->resource->handle($request);
     }
 }

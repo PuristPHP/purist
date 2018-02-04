@@ -4,15 +4,15 @@ namespace spec\Purist\Server\Endpoint;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Purist\Server\Endpoint\Endpoint;
 use Purist\Server\Endpoint\MethodEndpoint;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Purist\Server\Resource;
 
 class MethodEndpointSpec extends ObjectBehavior
 {
-    function let(Resource $resource)
+    function let(RequestHandlerInterface $resource)
     {
         $this->beConstructedWith('POST', $resource);
     }
@@ -35,9 +35,9 @@ class MethodEndpointSpec extends ObjectBehavior
     function it_returns_response_from_resource(
         ServerRequestInterface $request,
         ResponseInterface $response,
-        Resource $resource
+        RequestHandlerInterface $resource
     ) {
-        $resource->response($request)->willReturn($response);
-        $this->response($request)->shouldReturn($response);
+        $resource->handle($request)->willReturn($response);
+        $this->handle($request)->shouldReturn($response);
     }
 }

@@ -5,8 +5,9 @@ namespace Purist\Server;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-final class ResponseResource implements Resource
+final class ResponseResource implements RequestHandlerInterface
 {
     private $response;
 
@@ -15,7 +16,7 @@ final class ResponseResource implements Resource
         $this->response = $response;
     }
 
-    public function response(ServerRequestInterface $request): ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return $this->response;
     }

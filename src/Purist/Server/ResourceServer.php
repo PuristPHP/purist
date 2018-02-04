@@ -5,19 +5,20 @@ declare(strict_types=1);
 namespace Purist\Server;
 
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 class ResourceServer implements Server
 {
     private $resource;
 
-    public function __construct(Resource $resource)
+    public function __construct(RequestHandlerInterface $resource)
     {
         $this->resource = $resource;
     }
 
     final public function serve(ServerRequestInterface $request): void
     {
-        $response = $this->resource->response($request);
+        $response = $this->resource->handle($request);
 
         header(
             sprintf(

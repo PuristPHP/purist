@@ -5,7 +5,6 @@ namespace Purist\Server\Endpoint;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Purist\Exception;
 use Purist\Http\Response\TextResponse;
 
 final class EndpointFork implements Endpoint
@@ -28,14 +27,14 @@ final class EndpointFork implements Endpoint
         return false;
     }
 
-    public function response(ServerRequestInterface $request): ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         foreach ($this->endpoints as $endpoint) {
             if (!$endpoint->match($request)) {
                 continue;
             }
 
-            return $endpoint->response($request);
+            return $endpoint->handle($request);
         }
 
         return new TextResponse('Not Found', 404);

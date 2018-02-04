@@ -27,8 +27,8 @@ class EndpointForkSpec extends ObjectBehavior
         $request->getMethod()->willReturn('POST');
         $endpoint1->match($request)->willReturn(false);
         $endpoint2->match($request)->willReturn(true);
-        $endpoint2->response($request)->willReturn($response = new TextResponse('test'));
+        $endpoint2->handle($request)->willReturn($response = new TextResponse('test'));
 
-        $this->response($request)->shouldReturn($response);
+        $this->handle($request)->shouldReturn($response);
     }
 }

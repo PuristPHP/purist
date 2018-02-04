@@ -5,13 +5,15 @@ namespace Purist\Server\Middleware;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Purist\Http\Response\TextResponse;
 
-final class OrderedMiddlewares implements Middlewares
+final class OrderedMiddlewares implements RequestHandlerInterface
 {
     private $middlewares;
 
-    public function __construct(Middleware ...$middlewares)
+    public function __construct(MiddlewareInterface ...$middlewares)
     {
         $this->middlewares = $middlewares;
     }
@@ -22,7 +24,7 @@ final class OrderedMiddlewares implements Middlewares
             return new TextResponse('Not Found', 404);
         }
 
-        return $this->middlewares[0]->handle(
+        return $this->middlewares[0]->process(
             $request,
             new self(
                 ...array_slice($this->middlewares, 1, 1)

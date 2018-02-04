@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace Purist\Server\Endpoint;
 
 use Psr\Http\Message\ServerRequestInterface;
-use Purist\Server\Resource;
+use Psr\Http\Server\RequestHandlerInterface;
 
-interface Endpoint extends Resource
+interface Endpoint extends RequestHandlerInterface
 {
     public function match(ServerRequestInterface $request): bool;
 }

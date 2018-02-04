@@ -2,18 +2,15 @@
 
 namespace Acme;
 
-use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Purist\Exception;
+use Psr\Http\Server\RequestHandlerInterface;
 use Purist\Http\Header\HttpHeaders;
 use Purist\Http\Response\TextResponse;
-use Purist\Message;
-use Purist\Server\Resource;
 
-class HelloWorldPage implements Resource
+class HelloWorldPage implements RequestHandlerInterface
 {
-    public function response(ServerRequestInterface $request): ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
         return new TextResponse(
             'Hello World!',

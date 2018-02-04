@@ -3,18 +3,17 @@
 namespace spec\Purist\Server;
 
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Purist\Application;
-use Purist\Exception;
 use Purist\Http\Response\TextResponse;
 use Purist\Server\ResourceServer;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-use Purist\Server\Resource;
 use Purist\Server\Server;
 
 class ResourceServerSpec extends ObjectBehavior
 {
-    function let(Resource $resource)
+    function let(RequestHandlerInterface $resource)
     {
         $this->beConstructedWith($resource);
     }
@@ -28,9 +27,9 @@ class ResourceServerSpec extends ObjectBehavior
     /**
      * Can not test that headers are being set on CLI
      */
-    function it_sets_headers_and_returns_body(ServerRequestInterface $request, Resource $resource)
+    function it_sets_headers_and_returns_body(ServerRequestInterface $request, RequestHandlerInterface $resource)
     {
-        $resource->response($request)->willReturn(new TextResponse('hello world'));
+        $resource->handle($request)->willReturn(new TextResponse('hello world'));
 
         ob_start();
         $sut = $this->serve($request);

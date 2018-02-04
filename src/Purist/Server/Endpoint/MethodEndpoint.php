@@ -5,14 +5,14 @@ namespace Purist\Server\Endpoint;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Purist\Server\Resource;
+use Psr\Http\Server\RequestHandlerInterface;
 
 final class MethodEndpoint implements Endpoint
 {
     private $method;
     private $resource;
 
-    public function __construct(string $method, Resource $resource)
+    public function __construct(string $method, RequestHandlerInterface $resource)
     {
         $this->method = $method;
         $this->resource = $resource;
@@ -23,8 +23,8 @@ final class MethodEndpoint implements Endpoint
         return mb_strtoupper($request->getMethod()) === mb_strtoupper($this->method);
     }
 
-    public function response(ServerRequestInterface $request): ResponseInterface
+    public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        return $this->resource->response($request);
+        return $this->resource->handle($request);
     }
 }
