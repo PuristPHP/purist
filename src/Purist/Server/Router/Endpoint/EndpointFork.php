@@ -1,30 +1,22 @@
 <?php
+
 declare(strict_types=1);
 
-namespace Purist\Server\Endpoint;
+namespace Purist\Server\Router\Endpoint;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Purist\Http\Response\TextResponse;
+use Purist\Server\Router\Endpoint;
 
-final class EndpointFork implements Endpoint
+final class EndpointFork implements RequestHandlerInterface
 {
     private $endpoints;
 
     public function __construct(Endpoint ...$endpoints)
     {
         $this->endpoints = $endpoints;
-    }
-
-    public function match(ServerRequestInterface $request): bool
-    {
-        foreach ($this->endpoints as $endpoint) {
-            if ($endpoint->match($request)) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface

@@ -1,12 +1,12 @@
 <?php
 
-namespace spec\Purist\Server\Endpoint;
+namespace spec\Purist\Server\Router\Endpoint;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Purist\Server\Endpoint\Endpoint;
-use Purist\Server\Endpoint\MethodEndpoint;
+use Purist\Server\Router\Endpoint;
+use Purist\Server\Router\Endpoint\MethodEndpoint;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 

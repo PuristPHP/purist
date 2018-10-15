@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Purist\Server\Endpoint;
+namespace spec\Purist\Server\Router\Endpoint;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
@@ -8,8 +8,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Purist\Server\Endpoint\Endpoint;
-use Purist\Server\Endpoint\PathEndpoint;
+use Purist\Server\Router\Endpoint;
+use Purist\Server\Router\Endpoint\PathEndpoint;
 
 class PathEndpointSpec extends ObjectBehavior
 {
@@ -21,7 +21,7 @@ class PathEndpointSpec extends ObjectBehavior
     function it_is_initializable()
     {
         $this->shouldHaveType(PathEndpoint::class);
-        $this->shouldImplement(Endpoint::class);
+        $this->shouldImplement(\Purist\Server\Router\Endpoint::class);
     }
 
     function it_matches_a_path_by_string(ServerRequestInterface $request, UriInterface $uri)
@@ -40,10 +40,8 @@ class PathEndpointSpec extends ObjectBehavior
         $this->match($request)->shouldReturn(false);
     }
 
-    function it_will_return_a_resource_from_request($resource, ServerRequestInterface $request, UriInterface $uri, ResponseInterface $response)
+    function it_will_return_a_resource_from_request($resource, ServerRequestInterface $request, ResponseInterface $response)
     {
-        $uri->getPath()->willReturn('/hello-world');
-        $request->getUri()->willReturn($uri);
         $resource->handle($request)->willReturn($response);
 
         $this->handle($request)->shouldReturn($response);

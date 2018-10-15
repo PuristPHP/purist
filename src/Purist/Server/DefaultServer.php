@@ -7,18 +7,18 @@ namespace Purist\Server;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class ResourceServer implements Server
+class DefaultServer implements Server
 {
-    private $resource;
+    private $handler;
 
-    public function __construct(RequestHandlerInterface $resource)
+    public function __construct(RequestHandlerInterface $handler)
     {
-        $this->resource = $resource;
+        $this->handler = $handler;
     }
 
     final public function serve(ServerRequestInterface $request): void
     {
-        $response = $this->resource->handle($request);
+        $response = $this->handler->handle($request);
 
         header(
             sprintf(

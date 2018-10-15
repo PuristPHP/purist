@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Purist\Server;
 
 use Psr\Http\Server\MiddlewareInterface;
-use Purist\Server\Middleware\MiddlewaresResource;
 
-final class MiddlewareServer extends ResourceServer
+final class MiddlewareServer extends DefaultServer
 {
     public function __construct(MiddlewareInterface ...$middlewares)
     {
         parent::__construct(
-            new MiddlewaresResource(
+            new Middlewares(
                 ...$middlewares
             )
         );

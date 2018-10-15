@@ -1,14 +1,14 @@
 <?php
 
-namespace spec\Purist\Server\Endpoint;
+namespace spec\Purist\Server\Router\Endpoint;
 
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Purist\Server\Endpoint\Endpoint;
-use Purist\Server\Endpoint\FallbackEndpoint;
+use Purist\Server\Router\Endpoint;
+use Purist\Server\Router\Endpoint\FallbackEndpoint;
 
 class FallbackEndpointSpec extends ObjectBehavior
 {
@@ -20,7 +20,7 @@ class FallbackEndpointSpec extends ObjectBehavior
     function it_is_initializable()
     {
         $this->shouldHaveType(FallbackEndpoint::class);
-        $this->shouldImplement(Endpoint::class);
+        $this->shouldImplement(\Purist\Server\Router\Endpoint::class);
     }
 
     function it_will_always_match_request(ServerRequestInterface $request)

@@ -1,12 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
-namespace Purist\Server\Endpoint;
+namespace Purist\Server\Router\Endpoint;
 
 use InvalidArgumentException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Purist\Server\Router\Endpoint;
 
 final class RegexpEndpoint implements Endpoint
 {

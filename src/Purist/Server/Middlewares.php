@@ -1,14 +1,16 @@
 <?php
+
 declare(strict_types=1);
 
-namespace Purist\Server\Middleware;
+namespace Purist\Server;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Purist\Http\Response\TextResponse;
 
-final class MiddlewaresResource implements RequestHandlerInterface
+final class Middlewares implements RequestHandlerInterface
 {
     private $middlewares;
 
@@ -19,6 +21,15 @@ final class MiddlewaresResource implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        return (new OrderedMiddlewares(...$this->middlewares))->handle($request);
+        if (\count($this->middlewares) === 0) {
+            return new TextResponse('Not Found', 404);
+        }
+
+        return $this->middlewares[0]->process(
+            $request,
+            new self(
+                ...\array_slice($this->middlewares, 1, 1)
+            )
+        );
     }
 }

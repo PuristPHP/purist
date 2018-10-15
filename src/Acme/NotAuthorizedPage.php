@@ -1,23 +1,18 @@
 <?php
+
 declare(strict_types=1);
 
-namespace Purist\Server;
+namespace Acme;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
+use Purist\Http\Response\TextResponse;
 
-final class ResponseResource implements RequestHandlerInterface
+final class NotAuthorizedPage implements RequestHandlerInterface
 {
-    private $response;
-
-    public function __construct(ResponseInterface $response)
-    {
-        $this->response = $response;
-    }
-
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        return $this->response;
+        return new TextResponse('You are not authorized to view this page', 403);
     }
 }

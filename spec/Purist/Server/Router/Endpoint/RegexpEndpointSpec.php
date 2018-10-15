@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Purist\Server\Endpoint;
+namespace spec\Purist\Server\Router\Endpoint;
 
 use InvalidArgumentException;
 use PhpSpec\ObjectBehavior;
@@ -9,8 +9,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Purist\Server\Endpoint\Endpoint;
-use Purist\Server\Endpoint\RegexpEndpoint;
+use Purist\Server\Router\Endpoint;
+use Purist\Server\Router\Endpoint\RegexpEndpoint;
 
 class RegexpEndpointSpec extends ObjectBehavior
 {
@@ -22,7 +22,7 @@ class RegexpEndpointSpec extends ObjectBehavior
     function it_is_initializable()
     {
         $this->shouldHaveType(RegexpEndpoint::class);
-        $this->shouldImplement(Endpoint::class);
+        $this->shouldImplement(\Purist\Server\Router\Endpoint::class);
     }
 
     function it_matches_regexp_strings(ServerRequestInterface $request, UriInterface $uri)

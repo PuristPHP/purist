@@ -1,7 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
-namespace Purist\Server\Endpoint;
+namespace Purist\Server\Router;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;

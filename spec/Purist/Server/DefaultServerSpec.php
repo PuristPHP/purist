@@ -6,12 +6,12 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Purist\Application;
 use Purist\Http\Response\TextResponse;
-use Purist\Server\ResourceServer;
+use Purist\Server\DefaultServer;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 use Purist\Server\Server;
 
-class ResourceServerSpec extends ObjectBehavior
+class DefaultServerSpec extends ObjectBehavior
 {
     function let(RequestHandlerInterface $resource)
     {
@@ -20,7 +20,7 @@ class ResourceServerSpec extends ObjectBehavior
 
     function it_is_initializable()
     {
-        $this->shouldHaveType(ResourceServer::class);
+        $this->shouldHaveType(DefaultServer::class);
         $this->shouldImplement(Server::class);
     }
 

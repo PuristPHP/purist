@@ -1,20 +1,20 @@
 <?php
 
-namespace spec\Purist\Server\Middleware;
+namespace spec\Purist\Server;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Purist\Server\Middleware\MiddlewaresResource;
+use Purist\Server\Middlewares;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
-class MiddlewaresResourceSpec extends ObjectBehavior
+class MiddlewaresSpec extends ObjectBehavior
 {
     function it_is_initializable()
     {
-        $this->shouldHaveType(MiddlewaresResource::class);
+        $this->shouldHaveType(Middlewares::class);
     }
 
     function it_will_call_ordered_middlewares(ServerRequestInterface $request, MiddlewareInterface $middleware, ResponseInterface $response)

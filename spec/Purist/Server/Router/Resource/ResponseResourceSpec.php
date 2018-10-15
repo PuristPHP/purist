@@ -1,11 +1,11 @@
 <?php
 
-namespace spec\Purist\Server;
+namespace spec\Purist\Server\Router\Resource;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Purist\Server\ResponseResource;
+use Purist\Server\Router\Resource\ResponseResource;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 

@@ -1,10 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
-namespace Purist\Server\Endpoint;
+namespace Purist\Server\Router\Endpoint;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Purist\Server\Router\Endpoint;
 
 final class FallbackEndpoint implements Endpoint
 {
