@@ -4,7 +4,6 @@ namespace spec\Purist\Server;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Purist\Application;
 use Purist\Http\Response\TextResponse;
 use Purist\Server\DefaultServer;
 use PhpSpec\ObjectBehavior;
@@ -27,7 +26,7 @@ class DefaultServerSpec extends ObjectBehavior
     /**
      * Can not test that headers are being set on CLI
      */
-    function it_sets_headers_and_returns_body(ServerRequestInterface $request, RequestHandlerInterface $resource)
+    function it_sets_headers_and_outputs_body(ServerRequestInterface $request, RequestHandlerInterface $resource)
     {
         $resource->handle($request)->willReturn(new TextResponse('hello world'));
 
@@ -38,7 +37,7 @@ class DefaultServerSpec extends ObjectBehavior
         $sut->shouldOutput('hello world', $output);
     }
 
-    public function getMatchers()
+    public function getMatchers(): array
     {
         return [
             'output' => function ($subject, $expectedOutput, $output) {

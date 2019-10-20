@@ -22,7 +22,7 @@ class MiddlewareServerSpec extends ObjectBehavior
         $this->shouldHaveType(MiddlewareServer::class);
     }
 
-    function it_sets_headers_and_returns_body(ServerRequestInterface $request, MiddlewareInterface $middleware)
+    function it_sets_headers_and_outputs_body(ServerRequestInterface $request, MiddlewareInterface $middleware)
     {
         $middleware
             ->process($request, Argument::type(RequestHandlerInterface::class))
@@ -35,7 +35,7 @@ class MiddlewareServerSpec extends ObjectBehavior
         $sut->shouldOutput('hello world', $output);
     }
 
-    public function getMatchers()
+    public function getMatchers(): array
     {
         return [
             'output' => function ($subject, $expectedOutput, $output) {

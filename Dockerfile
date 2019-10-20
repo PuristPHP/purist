@@ -1,4 +1,4 @@
-FROM nicholasruunu/php:7.1-cli
+FROM php:7.3-cli
 
 EXPOSE 8080
 VOLUME /code

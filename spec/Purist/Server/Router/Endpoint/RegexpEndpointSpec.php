@@ -22,7 +22,7 @@ class RegexpEndpointSpec extends ObjectBehavior
     function it_is_initializable()
     {
         $this->shouldHaveType(RegexpEndpoint::class);
-        $this->shouldImplement(\Purist\Server\Router\Endpoint::class);
+        $this->shouldImplement(Endpoint::class);
     }
 
     function it_matches_regexp_strings(ServerRequestInterface $request, UriInterface $uri)

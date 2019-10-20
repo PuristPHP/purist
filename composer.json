@@ -9,15 +9,18 @@
         }
     ],
     "require": {
-        "php": "^7.1",
+        "php": "^7.3",
+        "ext-pdo": "*",
         "guzzlehttp/psr7": "^1.2",
         "psr/http-message": "^1.0",
         "purist/http-message": "dev-release/1.0.0",
         "psr/http-server-middleware": "^1.0",
-        "psr/http-server-handler": "^1.0"
+        "psr/http-server-handler": "^1.0",
+        "doctrine/dbal": "^2.9",
+        "react/http": "^0.8.4"
     },
     "require-dev": {
-        "phpspec/phpspec": "^3.0"
+        "phpspec/phpspec": "^5.1"
     },
     "config": {
         "bin-dir": "bin"
