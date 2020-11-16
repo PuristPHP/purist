@@ -16,7 +16,7 @@
         "purist/http-message": "dev-release/1.0.0",
         "psr/http-server-middleware": "^1.0",
         "psr/http-server-handler": "^1.0",
-        "doctrine/dbal": "^2.9",
+        "doctrine/dbal": "^3.0",
         "react/http": "^0.8.4"
     },
     "require-dev": {
