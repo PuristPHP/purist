@@ -20,7 +20,7 @@
         "react/http": "^0.8.4"
     },
     "require-dev": {
-        "phpspec/phpspec": "^6.0"
+        "phpspec/phpspec": "^7.1"
     },
     "config": {
         "bin-dir": "bin"
