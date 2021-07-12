@@ -17,7 +17,7 @@
         "psr/http-server-middleware": "^1.0",
         "psr/http-server-handler": "^1.0",
         "doctrine/dbal": "^2.9",
-        "react/http": "^0.8.4"
+        "react/http": "^1.4.0"
     },
     "require-dev": {
         "phpspec/phpspec": "^6.0"
